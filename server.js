@@ -4,7 +4,8 @@ import{ DBConn} from "./src/config/db.js";
 import "dotenv/config"
 import authRoute from "./src/routes/authRoute.js"
 import productRoutes from './src/routes/productRoutes.js';
-
+import cartRoutes from './src/routes/cartRoutes.js';
+import orderRoutes from './src/routes/orderRoutes.js';
 
 const app=express()
 
@@ -24,7 +25,8 @@ app.get("/",(req,res)=>{
 
 app.use('/api/auth', authRoute);
 app.use('/api/products', productRoutes);
-
+app.use('/api/cart', cartRoutes);
+app.use('/api/orders',orderRoutes)
 app.use((req, res) => {
   res.status(404).json({ success: false, message: `Route ${req.method} ${req.path} not found.` });
 });

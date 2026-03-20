@@ -13,6 +13,20 @@ const loginSchema=Joi.object({
     password: Joi.string().required(),
 })
 
+const addToCartSchema = Joi.object({
+  product_id: Joi.number().integer().positive().required(),
+  quantity: Joi.number().integer().min(1).default(1),
+});
+
+
+const paymentSchema = Joi.object({
+  order_id: Joi.number().integer().positive().required(),
+  payment_status: Joi.string().valid('success', 'failure').required(),
+});
+
+
+
+
 const validate = (schema) => (req, res, next) => {
   const { error, value } = schema.validate(req.body, { abortEarly: false });
   if (error) {
@@ -28,10 +42,14 @@ const validate = (schema) => (req, res, next) => {
 
 
 
+
+
 export {
   validate,
   registerSchema,
-  loginSchema
+  loginSchema,
+  addToCartSchema,
+  paymentSchema
 }
 
 
