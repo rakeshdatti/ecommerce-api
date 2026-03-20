@@ -54,7 +54,7 @@ const placeOrder = async (req, res) => {
     );
     const orderId = orderResult.insertId;
 
-    //  Insert order items + deduct stock
+
     for (const item of cartItems) {
       const subtotal = Number(item.price) * item.quantity;
 
@@ -174,7 +174,7 @@ const handlePayment = async (req, res) => {
       await conn.commit();
       return res.status(200).json({
         success: false,
-        message: 'Payment failed. Stock restored and wallet points refunded. ❌',
+        message: 'Payment failed. Stock restored and wallet points refunded',
         order_id,
         status: 'failed',
         refunded_points: order.total_points,
@@ -183,7 +183,7 @@ const handlePayment = async (req, res) => {
   } catch (err) {
     await conn.rollback();
     console.error('HandlePayment error:', err);
-    return res.status(500).json({ success: false, message: 'Server error.' });
+    return res.status(500).json({ success: false, message: 'Server error' });
   } finally {
     conn.release();
   }
